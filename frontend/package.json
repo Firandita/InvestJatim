@@ -1,0 +1,29 @@
+{
+  "name": "website-jtvhub",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tailwind:init": "node node_modules/tailwindcss/lib/cli.js init"
+  },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "chart.js": "^4.5.1",
+    "hls.js": "^1.6.15",
+    "swiper": "^12.0.3",
+    "vue": "^3.5.22",
+    "vue-chartjs": "^5.3.3",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "autoprefixer": "^10.4.22",
+    "postcss": "^8.5.6",
+    "sass": "^1.94.2",
+    "tailwindcss": "^3.4.18",
+    "vite": "^7.1.7"
+  }
+}
