@@ -55,13 +55,9 @@ function normalize(data) {
 }
 
 export function kMeans(data, k = 3, iter = 100) {
-  if (data.length < k) return data.map(d => ({ ...d, cluster: 'Normal' }))
+  if (data.length < k) return data.map(d => ({ ...d, cluster: 'Normal', isRead: d.isRead || false }))
   const norm = normalize(data)
-  let centroids = [
-    [0.2, 0.2, 0.2, 0.2, 0.2],
-    [0.5, 0.5, 0.5, 0.5, 0.5],
-    [0.8, 0.8, 0.8, 0.8, 0.8],
-  ]
+  let centroids = [[0.2, 0.2, 0.2, 0.2, 0.2], [0.5, 0.5, 0.5, 0.5, 0.5], [0.8, 0.8, 0.8, 0.8, 0.8]]
   let assignments = new Array(norm.length).fill(0)
 
   for (let it = 0; it < iter; it++) {
@@ -75,24 +71,22 @@ export function kMeans(data, k = 3, iter = 100) {
     centroids = centroids.map((_, ci) => {
       const members = norm.filter((_, i) => assignments[i] === ci)
       if (!members.length) return centroids[ci]
-      return centroids[0].map((_, fi) =>
-        members.reduce((s, m) => s + m._n[fi], 0) / members.length
-      )
+      return centroids[0].map((_, fi) => members.reduce((s, m) => s + m._n[fi], 0) / members.length)
     })
   }
 
   const clusterRisk = centroids.map(c => c.reduce((s, v) => s + v, 0) / c.length)
   const sortedIdx = [...clusterRisk.keys()].sort((a, b) => clusterRisk[b] - clusterRisk[a])
   const labelMap = {}
-  sortedIdx.forEach((ci, rank) => {
-    labelMap[ci] = rank === 0 ? 'Kritis' : rank === 1 ? 'Berisiko' : 'Normal'
-  })
+  sortedIdx.forEach((ci, rank) => { labelMap[ci] = rank === 0 ? 'Kritis' : rank === 1 ? 'Berisiko' : 'Normal' })
 
   return norm.map((d, i) => {
     const s = { ...d }
+    const currentIsRead = d.isRead
     delete s._n
     s.cluster = labelMap[assignments[i]]
     s.risk = computeRisk(s)
+    s.isRead = currentIsRead !== undefined ? currentIsRead : false
     return s
   })
 }
@@ -106,6 +100,7 @@ export function useStudents() {
     students.value = SAMPLE.map(([nama, kelas, screen_time, fokus, tidur, mood, prestasi]) => ({
       nama, kelas, screen_time, fokus, tidur, mood, prestasi,
       cluster: '', risk: computeRisk({ screen_time, fokus, tidur, mood, prestasi }),
+      isRead: false
     }))
     runClustering()
   }
@@ -117,8 +112,24 @@ export function useStudents() {
     return true
   }
 
+  // Menandai SATU siswa sebagai sudah dibaca
+  function markAsRead(studentName) {
+    const target = students.value.find(s => s.nama === studentName)
+    if (target) {
+      target.isRead = true
+    }
+  }
+
+  // Menandai SEMUA siswa kritis/berisiko sebagai sudah dibaca
+  function markAllAsRead() {
+    students.value = students.value.map(s => ({
+      ...s,
+      isRead: (s.cluster === 'Kritis' || s.cluster === 'Berisiko') ? true : s.isRead
+    }))
+  }
+
   function addStudent(s) {
-    students.value.push({ ...s, cluster: '', risk: computeRisk(s) })
+    students.value.push({ ...s, cluster: '', risk: computeRisk(s), isRead: false })
   }
 
   function importStudents(rows) {
@@ -130,8 +141,7 @@ export function useStudents() {
       tidur: parseInt(r.tidur) || 0,
       mood: parseInt(r.mood) || 0,
       prestasi: parseInt(r.prestasi) || 0,
-      cluster: '',
-      risk: 0,
+      cluster: '', risk: 0, isRead: false
     })).filter(s => s.nama)
     mapped.forEach(s => { s.risk = computeRisk(s) })
     students.value = [...students.value, ...mapped]
@@ -146,13 +156,20 @@ export function useStudents() {
     normal: students.value.filter(s => s.cluster === 'Normal').length,
   }))
 
-  const kelasOptions = computed(() =>
-    [...new Set(students.value.map(s => s.kelas))].sort()
+  // Sidebar badge hanya menghitung yang BELUM dibaca
+  const alertCount = computed(() => 
+    students.value.filter(s => (s.cluster === 'Kritis' || s.cluster === 'Berisiko') && !s.isRead).length
   )
 
-  const alertCount = computed(() =>
-    students.value.filter(s => s.cluster === 'Kritis' || s.cluster === 'Berisiko').length
-  )
+  const kelasOptions = [
+    'X IPA 1', 'X IPA 2', 'X IPS 1', 'X IPS 2', 
+    'XI IPA 1', 'XI IPA 2', 'XI IPS 1', 'XI IPS 2', 
+    'XII IPA 1', 'XII IPA 2', 'XII IPS 1', 'XII IPS 2'
+  ]
 
-  return { students, clustered, stats, kelasOptions, alertCount, initSample, runClustering, addStudent, importStudents }
+  return { 
+    students, clustered, stats, alertCount, kelasOptions, 
+    initSample, runClustering, addStudent, importStudents, 
+    markAllAsRead, markAsRead 
+  }
 }

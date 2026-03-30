@@ -1,74 +1,73 @@
 <template>
   <div class="flex flex-col gap-6">
-    <!-- Header -->
-    <div class="flex items-start justify-between flex-wrap gap-3">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
-        <h1 class="font-syne text-2xl font-extrabold text-ink">Overview</h1>
-        <p class="text-sm text-ink-3 mt-0.5">Ringkasan kondisi seluruh siswa yang terdaftar</p>
+        <h1 class="font-syne text-xl md:text-2xl font-extrabold text-ink">Overview</h1>
+        <p class="text-xs md:text-sm text-ink-3 mt-0.5">Ringkasan kondisi seluruh siswa yang terdaftar</p>
       </div>
-      <button class="btn btn-primary" @click="$emit('run-clustering')">⚙ Jalankan Clustering</button>
+      <button class="btn btn-primary w-full sm:w-auto text-sm" @click="$emit('run-clustering')">
+        ⚙ Jalankan Clustering
+      </button>
     </div>
 
-    <!-- Stat cards -->
-    <div class="grid grid-cols-4 gap-4">
-      <div class="stat-card stat-card-total">
-        <div class="text-[11px] font-bold uppercase tracking-widest text-ink-3 mb-2">Total Siswa</div>
-        <div class="font-syne text-4xl font-extrabold text-ink leading-none">{{ stats.total }}</div>
-        <div class="text-xs text-ink-3 mt-1.5">siswa terdaftar</div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+      <div class="stat-card stat-card-total p-4">
+        <div class="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-ink-3 mb-1">Total Siswa</div>
+        <div class="font-syne text-2xl md:text-4xl font-extrabold text-ink leading-none">{{ stats.total }}</div>
+        <div class="text-[10px] md:text-xs text-ink-3 mt-1.5">siswa terdaftar</div>
       </div>
-      <div class="stat-card stat-card-kritis">
-        <div class="text-[11px] font-bold uppercase tracking-widest text-ink-3 mb-2">Kritis</div>
-        <div class="font-syne text-4xl font-extrabold text-danger leading-none">{{ stats.kritis }}</div>
-        <div class="text-xs text-ink-3 mt-1.5">perlu intervensi segera</div>
+      <div class="stat-card stat-card-kritis p-4">
+        <div class="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-ink-3 mb-1">Kritis</div>
+        <div class="font-syne text-2xl md:text-4xl font-extrabold text-danger leading-none">{{ stats.kritis }}</div>
+        <div class="text-[10px] md:text-xs text-ink-3 mt-1.5">perlu intervensi</div>
       </div>
-      <div class="stat-card stat-card-berisiko">
-        <div class="text-[11px] font-bold uppercase tracking-widest text-ink-3 mb-2">Berisiko</div>
-        <div class="font-syne text-4xl font-extrabold text-warn leading-none">{{ stats.berisiko }}</div>
-        <div class="text-xs text-ink-3 mt-1.5">perlu dipantau</div>
+      <div class="stat-card stat-card-berisiko p-4">
+        <div class="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-ink-3 mb-1">Berisiko</div>
+        <div class="font-syne text-2xl md:text-4xl font-extrabold text-warn leading-none">{{ stats.berisiko }}</div>
+        <div class="text-[10px] md:text-xs text-ink-3 mt-1.5">perlu dipantau</div>
       </div>
-      <div class="stat-card stat-card-normal">
-        <div class="text-[11px] font-bold uppercase tracking-widest text-ink-3 mb-2">Normal</div>
-        <div class="font-syne text-4xl font-extrabold text-teal leading-none">{{ stats.normal }}</div>
-        <div class="text-xs text-ink-3 mt-1.5">kondisi baik</div>
+      <div class="stat-card stat-card-normal p-4">
+        <div class="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-ink-3 mb-1">Normal</div>
+        <div class="font-syne text-2xl md:text-4xl font-extrabold text-teal leading-none">{{ stats.normal }}</div>
+        <div class="text-[10px] md:text-xs text-ink-3 mt-1.5">kondisi baik</div>
       </div>
     </div>
 
-    <!-- Charts row -->
-    <div class="grid grid-cols-[1.5fr_1fr] gap-4">
-      <div class="card">
-        <div class="card-title">Screen Time vs Skor Konsentrasi</div>
-        <div class="card-sub">Scatter plot per siswa · klik titik untuk detail</div>
-        <div class="relative h-[280px]">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-4">
+      <div class="card p-4 md:p-5">
+        <div class="card-title text-base md:text-lg">Screen Time vs Skor Konsentrasi</div>
+        <div class="card-sub text-xs">Scatter plot per siswa · klik titik untuk detail</div>
+        <div class="relative h-[250px] md:h-[300px]">
           <canvas ref="scatterRef"></canvas>
         </div>
-        <div class="flex gap-4 mt-3 flex-wrap">
-          <div class="flex items-center gap-2 text-xs text-ink-2">
-            <span class="w-3 h-3 rounded-full bg-danger inline-block"></span>Kritis
+        <div class="flex gap-3 mt-3 flex-wrap">
+          <div class="flex items-center gap-1.5 text-[10px] md:text-xs text-ink-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-danger inline-block"></span>Kritis
           </div>
-          <div class="flex items-center gap-2 text-xs text-ink-2">
-            <span class="w-3 h-3 rounded-full bg-warn inline-block"></span>Berisiko
+          <div class="flex items-center gap-1.5 text-[10px] md:text-xs text-ink-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-warn inline-block"></span>Berisiko
           </div>
-          <div class="flex items-center gap-2 text-xs text-ink-2">
-            <span class="w-3 h-3 rounded-full inline-block" style="background:#14a896"></span>Normal
+          <div class="flex items-center gap-1.5 text-[10px] md:text-xs text-ink-2">
+            <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#14a896"></span>Normal
           </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title">Distribusi Cluster</div>
-        <div class="card-sub">Perbandingan jumlah per cluster</div>
-        <div class="relative h-[280px]">
+      <div class="card p-4 md:p-5">
+        <div class="card-title text-base md:text-lg">Distribusi Cluster</div>
+        <div class="card-sub text-xs">Perbandingan jumlah per cluster</div>
+        <div class="relative h-[250px] md:h-[300px]">
           <canvas ref="donutRef"></canvas>
         </div>
       </div>
     </div>
 
-    <!-- Top risk table -->
-    <div class="card">
-      <div class="card-title">Siswa Prioritas Intervensi</div>
-      <div class="card-sub">10 siswa dengan risk score tertinggi</div>
-      <div class="overflow-x-auto">
-        <table class="tbl">
-          <thead>
+    <div class="card overflow-hidden">
+      <div class="p-4 md:p-5 pb-0">
+        <div class="card-title text-base md:text-lg">Siswa Prioritas Intervensi</div>
+        <div class="card-sub text-xs">10 siswa dengan risk score tertinggi</div>
+      </div>
+      <div class="overflow-x-auto w-full mt-4">
+        <table class="tbl w-full min-w-[800px]"> <thead>
             <tr>
               <th>Nama</th><th>Kelas</th><th>Screen Time</th>
               <th>Konsentrasi</th><th>Risk Score</th><th>Cluster</th><th></th>

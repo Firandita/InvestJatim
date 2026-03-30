@@ -1,62 +1,80 @@
 <template>
   <div class="flex flex-col gap-6">
-    <div class="flex items-start justify-between flex-wrap gap-3">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
-        <h1 class="font-syne text-2xl font-extrabold text-ink">Clustering K-Means</h1>
-        <p class="text-sm text-ink-3 mt-0.5">Segmentasi otomatis siswa berdasarkan 5 indikator brain rot</p>
+        <h1 class="font-syne text-xl md:text-2xl font-extrabold text-ink">Clustering K-Means</h1>
+        <p class="text-xs md:text-sm text-ink-3 mt-0.5">Segmentasi otomatis siswa berdasarkan 5 indikator brain rot</p>
       </div>
-      <button class="btn btn-primary" @click="$emit('run-clustering')">⚙ Jalankan Ulang</button>
+      <button class="btn btn-primary w-full sm:w-auto text-sm" @click="$emit('run-clustering')">
+        ⚙ Jalankan Ulang
+      </button>
     </div>
 
-    <!-- Cluster scatter -->
-    <div class="card">
-      <div class="card-title">Visualisasi Cluster (2D Projection)</div>
-      <div class="card-sub">Proyeksi PCA · warna = cluster · ukuran = risk score</div>
-      <div class="relative h-[360px]">
+    <div class="card p-4 md:p-5">
+      <div class="card-title text-base md:text-lg">Visualisasi Cluster (2D Projection)</div>
+      <div class="card-sub text-xs">Proyeksi PCA · warna = cluster · ukuran = risk score</div>
+      <div class="relative h-[300px] md:h-[360px]">
         <canvas ref="clusterRef"></canvas>
       </div>
-      <div class="flex gap-5 mt-4 flex-wrap">
-        <div class="flex items-center gap-2 text-xs text-ink-2">
-          <span class="w-3 h-3 rounded-full bg-danger inline-block"></span>Cluster 0 — Kritis (Brain Rot Tinggi)
+      <div class="flex gap-3 md:gap-5 mt-4 flex-wrap">
+        <div class="flex items-center gap-2 text-[10px] md:text-xs text-ink-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-danger inline-block"></span>Kritis
         </div>
-        <div class="flex items-center gap-2 text-xs text-ink-2">
-          <span class="w-3 h-3 rounded-full bg-warn inline-block"></span>Cluster 1 — Berisiko
+        <div class="flex items-center gap-2 text-[10px] md:text-xs text-ink-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-warn inline-block"></span>Berisiko
         </div>
-        <div class="flex items-center gap-2 text-xs text-ink-2">
-          <span class="w-3 h-3 rounded-full inline-block" style="background:#14a896"></span>Cluster 2 — Normal
+        <div class="flex items-center gap-2 text-[10px] md:text-xs text-ink-2">
+          <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:#14a896"></span>Normal
         </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-2 gap-4">
-      <!-- Radar -->
-      <div class="card">
-        <div class="card-title">Centroid Cluster</div>
-        <div class="card-sub">Rata-rata nilai tiap cluster per indikator</div>
-        <div class="relative h-[240px]">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      
+      <div class="card p-4 md:p-5">
+        <div class="card-title text-base md:text-lg">Centroid Cluster</div>
+        <div class="card-sub text-xs">Rata-rata nilai tiap cluster per indikator</div>
+        <div class="relative h-[240px] md:h-[280px]">
           <canvas ref="radarRef"></canvas>
         </div>
       </div>
 
-      <!-- Stats -->
-      <div class="card">
-        <div class="card-title">Statistik Cluster</div>
-        <div class="card-sub">Ringkasan karakteristik tiap cluster</div>
+      <div class="card p-4 md:p-5">
+        <div class="card-title text-base md:text-lg">Statistik Cluster</div>
+        <div class="card-sub text-xs">Ringkasan karakteristik tiap cluster</div>
+        
         <div v-if="!clusterGroups.length" class="text-sm text-ink-3 mt-4">
           Belum ada data cluster. Jalankan clustering dahulu.
         </div>
+        
         <div v-for="(g, idx) in clusterGroups" :key="g.label"
           :class="['py-4', idx < clusterGroups.length - 1 ? 'border-b border-[#e0ddd6]' : '']">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="font-bold text-sm" :style="{ color: g.color }">{{ g.label }}</span>
-            <span class="text-xs text-ink-3">{{ g.count }} siswa</span>
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-sm md:text-base" :style="{ color: g.color }">{{ g.label }}</span>
+            <span class="text-[10px] md:text-xs text-ink-3 px-2 py-0.5 bg-slate-100 rounded-full">{{ g.count }} siswa</span>
           </div>
-          <div class="grid grid-cols-2 gap-1.5 text-xs text-ink-2">
-            <span>Screen time: <b>{{ g.avgSt }} jam</b></span>
-            <span>Konsentrasi: <b>{{ g.avgFokus }}%</b></span>
-            <span>Kualitas tidur: <b>{{ g.avgTidur }}%</b></span>
-            <span>Mood: <b>{{ g.avgMood }}%</b></span>
-            <span>Risk score rata-rata: <b>{{ g.avgRisk }}</b></span>
+          
+          <div class="grid grid-cols-2 gap-y-2 gap-x-4 text-[10px] md:text-xs text-ink-2">
+            <div class="flex flex-col">
+              <span class="text-slate-400">Screen time</span>
+              <b class="text-ink">{{ g.avgSt }} jam</b>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-slate-400">Konsentrasi</span>
+              <b class="text-ink">{{ g.avgFokus }}%</b>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-slate-400">Kualitas tidur</span>
+              <b class="text-ink">{{ g.avgTidur }}%</b>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-slate-400">Mood</span>
+              <b class="text-ink">{{ g.avgMood }}%</b>
+            </div>
+            <div class="flex flex-col col-span-2 mt-1 pt-1 border-t border-dashed border-slate-200">
+              <span class="text-slate-400">Risk score rata-rata</span>
+              <b class="text-ink text-sm">{{ g.avgRisk }}</b>
+            </div>
           </div>
         </div>
       </div>
