@@ -30,7 +30,7 @@
           <div class="flex-1 min-w-0">
             <div :class="['font-bold', s.isRead ? 'text-slate-700' : 'text-danger']">{{ s.nama }}</div>
             <div class="text-xs text-ink-2 mt-0.5">
-              {{ s.kelas }} · Screen time: {{ s.screen_time }}j/hr · Konsentrasi: {{ s.fokus }}% · Risk score: {{ s.risk }}
+              {{ s.kelas }} · Screen time: {{ s.screen_time }}j/hr · Konsentrasi: {{ s.konsentrasi}}% · Risk score: {{ s.risk }}
             </div>
           </div>
           <button 
@@ -60,7 +60,7 @@
           <div class="flex-1 min-w-0">
             <div :class="['font-bold', s.isRead ? 'text-slate-700' : 'text-warn']">{{ s.nama }}</div>
             <div class="text-xs text-ink-2 mt-0.5">
-              {{ s.kelas }} · Screen time: {{ s.screen_time }}j/hr · Konsentrasi: {{ s.fokus }}% · Risk score: {{ s.risk }}
+              {{ s.kelas }} · Screen time: {{ s.screen_time }}j/hr · Konsentrasi: {{ s.konsentrasi }}% · Risk score: {{ s.risk }}
             </div>
           </div>
           <button 
@@ -90,6 +90,7 @@ const hasUnread = computed(() =>
 )
 
 const handleMarkAll = () => {
+
   if (!hasUnread.value) return
   emit('mark-read')
   emit('toast', '✓ Semua alert ditandai dibaca.')

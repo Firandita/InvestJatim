@@ -86,9 +86,9 @@
               <td>
                 <div class="flex items-center gap-2">
                   <div class="rbar">
-                    <div class="rbar-fill" :style="{ width: s.fokus + '%', background: s.fokus < 40 ? '#c0392b' : s.fokus < 65 ? '#b5620a' : '#14a896' }"></div>
+                    <div class="rbar-fill" :style="{ width: s.konsentrasi + '%', background: s.konsentrasi < 40 ? '#c0392b' : s.konsentrasi < 65 ? '#b5620a' : '#14a896' }"></div>
                   </div>
-                  <span class="text-xs text-ink-3">{{ s.fokus }}%</span>
+                  <span class="text-xs text-ink-3">{{ s.konsentrasi }}%</span>
                 </div>
               </td>
               <td>
@@ -130,7 +130,7 @@ function buildScatter() {
   const datasets = ['Kritis', 'Berisiko', 'Normal'].map(cl => ({
     label: cl,
     data: props.students.filter(s => s.cluster === cl).map(s => ({
-      x: s.screen_time, y: s.fokus, r: 7, student: s,
+      x: s.screen_time, y: s.konsentrasi, r: 7, student: s,
     })),
     backgroundColor: colors[cl] + 'bb',
     borderColor: colors[cl],
@@ -142,7 +142,7 @@ function buildScatter() {
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
-        tooltip: { callbacks: { label: ctx => ctx.raw.student ? `${ctx.raw.student.nama} — ${ctx.raw.x}j/hr, fokus:${ctx.raw.y}%` : '' } },
+        tooltip: { callbacks: { label: ctx => ctx.raw.student ? `${ctx.raw.student.nama} — ${ctx.raw.x}j/hr, konsentrasi:${ctx.raw.y}%` : '' } },
       },
       onClick: (e, els) => {
         if (els.length) emit('open-detail', datasets[els[0].datasetIndex].data[els[0].index].student)
@@ -160,11 +160,10 @@ function buildDonut() {
   donutChart = new Chart(donutRef.value, {
     type: 'doughnut',
     data: {
-      labels: ['Kritis', 'Berisiko', 'Normal', 'Belum Dianalisis'],
+      labels: ['Kritis', 'Berisiko', 'Normal'],
       datasets: [{
-        data: [props.stats.kritis, props.stats.berisiko, props.stats.normal,
-               props.students.filter(s => !s.cluster).length],
-        backgroundColor: ['#c0392b', '#b5620a', '#0f7b6c', '#c8c5bf'],
+        data: [props.stats.kritis, props.stats.berisiko, props.stats.normal],
+        backgroundColor: ['#c0392b', '#b5620a', '#0f7b6c'],
         borderWidth: 0, borderRadius: 4, spacing: 3,
       }],
     },

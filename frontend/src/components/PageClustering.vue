@@ -61,7 +61,7 @@
             </div>
             <div class="flex flex-col">
               <span class="text-slate-400">Konsentrasi</span>
-              <b class="text-ink">{{ g.avgFokus }}%</b>
+              <b class="text-ink">{{ g.avgKonsentrasi }}%</b>
             </div>
             <div class="flex flex-col">
               <span class="text-slate-400">Kualitas tidur</span>
@@ -103,7 +103,7 @@ const clusterGroups = computed(() => {
     return g.length ? {
       label, color: COLOR[label], count: g.length,
       avgSt: avg(g, s => s.screen_time),
-      avgFokus: avg(g, s => s.fokus),
+      avgKonsentrasi: avg(g, s => s.konsentrasi),
       avgTidur: avg(g, s => s.tidur),
       avgMood: avg(g, s => s.mood),
       avgRisk: avg(g, s => s.risk || 0),
@@ -119,7 +119,7 @@ function buildCluster() {
     label: cl,
     data: props.students.filter(s => s.cluster === cl).map(s => ({
       x: s.screen_time + (Math.random() - .5) * .3,
-      y: (100 - s.fokus) / 100 * 10 + (Math.random() - .5) * .3,
+      y: (100 - s.konsentrasi) / 100 * 10 + (Math.random() - .5) * .3,
       r: Math.max(5, (s.risk || 50) / 12),
       student: s,
     })),
@@ -149,13 +149,13 @@ function buildRadar() {
     const g = props.students.filter(s => s.cluster === cl)
     return {
       label: cl,
-      data: [avg(g, s => s.screen_time / 12 * 100), avg(g, s => 100 - s.fokus), avg(g, s => 100 - s.tidur), avg(g, s => 100 - s.mood), avg(g, s => 100 - s.prestasi)],
+      data: [avg(g, s => s.screen_time / 12 * 100), avg(g, s => 100 - s.konsentrasi), avg(g, s => 100 - s.tidur), avg(g, s => 100 - s.mood), avg(g, s => 100 - s.pemahaman_materi)],
       backgroundColor: COLORS[cl], borderColor: BORDERS[cl], borderWidth: 2, pointRadius: 3,
     }
   })
   radarChart = new Chart(radarRef.value, {
     type: 'radar',
-    data: { labels: ['Screen Time', '↓ Konsentrasi', '↓ Tidur', '↓ Mood', '↓ Prestasi'], datasets },
+    data: { labels: ['Screen Time', '↓ Konsentrasi', '↓ Tidur', '↓ Mood', '↓ Pemahaman Materi'], datasets },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { labels: { font: { size: 11 }, color: '#4a4844', boxWidth: 10 } } },

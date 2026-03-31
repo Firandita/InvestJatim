@@ -73,7 +73,7 @@
         <table class="tbl">
           <thead>
             <tr>
-              <th>Nama</th><th>Kelas</th><th>Screen Time</th><th>Konsentrasi</th><th>Tidur</th><th>Mood</th><th>Prestasi</th>
+              <th>Nama</th><th>Kelas</th><th>Screen Time</th><th>Konsentrasi</th><th>Tidur</th><th>Mood</th><th>Pemahaman Materi</th>
             </tr>
           </thead>
           <tbody>
@@ -81,10 +81,10 @@
               <td class="td-name text-xs md:text-sm">{{ s.nama }}</td>
               <td class="text-xs md:text-sm">{{ s.kelas }}</td>
               <td class="text-xs md:text-sm">{{ s.screen_time }}</td>
-              <td class="text-xs md:text-sm">{{ s.fokus }}%</td>
+              <td class="text-xs md:text-sm">{{ s.konsentrasi }}%</td>
               <td class="text-xs md:text-sm">{{ s.tidur }}%</td>
               <td class="text-xs md:text-sm">{{ s.mood }}%</td>
-              <td class="text-xs md:text-sm">{{ s.prestasi }}%</td>
+              <td class="text-xs md:text-sm">{{ s.pemahaman_materi }}%</td>
             </tr>
             <tr v-if="pendingRows.length > 10">
               <td colspan="7" class="text-[10px] text-ink-3 py-3 text-center bg-slate-50">
@@ -123,11 +123,11 @@ const columns = [
   { name: 'konsentrasi', desc: 'Skor fokus belajar (0–100)', type: 'angka' },
   { name: 'tidur', desc: 'Kualitas tidur (0–100)', type: 'angka' },
   { name: 'mood', desc: 'Stabilitas emosi (0–100)', type: 'angka' },
-  { name: 'prestasi', desc: 'Skor akademik (0–100)', type: 'angka' },
+  { name: 'pemahaman_materi', desc: 'Pemahaman materi (0–100)', type: 'angka' },
 ]
 
 function processData(rawData, name) {
-  const required = ['nama', 'kelas', 'screen_time', 'konsentrasi', 'tidur', 'mood', 'prestasi']
+  const required = ['nama', 'kelas', 'screen_time', 'konsentrasi', 'tidur', 'mood', 'pemahaman_materi']
   if (!rawData.length) { emit('toast', '⚠ File kosong.', 'warn'); return }
   const missing = required.filter(k => !(k in rawData[0]))
   if (missing.length) { emit('toast', `⚠ Kolom tidak lengkap: ${missing.join(', ')}`, 'warn'); return }
@@ -137,10 +137,10 @@ function processData(rawData, name) {
     nama: String(r.nama || '').trim(),
     kelas: String(r.kelas || '').trim(),
     screen_time: parseFloat(r.screen_time) || 0,
-    fokus: parseInt(r.konsentrasi) || 0,
+    konsentrasi: parseInt(r.konsentrasi) || 0,
     tidur: parseInt(r.tidur) || 0,
     mood: parseInt(r.mood) || 0,
-    prestasi: parseInt(r.prestasi) || 0,
+    pemahaman_materi: parseInt(r.pemahaman_materi) || 0,
   })).filter(s => s.nama)
 }
 
@@ -183,7 +183,7 @@ function cancelUpload() {
 }
 
 function downloadTemplate() {
-  const csv = 'nama,kelas,screen_time,konsentrasi,tidur,mood,prestasi\nAhmad Faiz,XII IPA 1,6,55,60,50,65\nSiti Nuraini,XII IPA 1,3,80,78,75,85\nBudi Santoso,XI IPS 2,9,30,40,35,45\n'
+  const csv = 'nama,kelas,screen_time,konsentrasi,tidur,mood,pemahaman_materi\nAhmad Faiz,XII IPA 1,6,55,60,50,65\nSiti Nuraini,XII IPA 1,3,80,78,75,85\nBudi Santoso,XI IPS 2,9,30,40,35,45\n'
   const blob = new Blob([csv], { type: 'text/csv' })
   const a = document.createElement('a')
   a.href = URL.createObjectURL(blob)

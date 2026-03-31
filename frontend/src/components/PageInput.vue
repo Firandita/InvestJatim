@@ -53,11 +53,11 @@
           <span class="text-[11px] text-ink-3">Kestabilan emosi dan suasana hati</span>
         </div>
 
-        <!-- Prestasi -->
+        <!-- Pemahaman Materi -->
         <div class="flex flex-col gap-1.5">
-          <label class="form-label">Skor Prestasi Akademik (0–100) *</label>
-          <input v-model.number="form.prestasi" type="number" min="0" max="100" class="form-input" placeholder="contoh: 72" />
-          <span class="text-[11px] text-ink-3">Nilai rata-rata akademik saat ini</span>
+          <label class="form-label">Pemahaman Materi (0–100) *</label>
+          <input v-model.number="form.pemahaman_materi" type="number" min="0" max="100" class="form-input" placeholder="contoh: 72" />
+          <span class="text-[11px] text-ink-3">Tingkat pemahaman terhadap materi pelajaran</span>
         </div>
 
         <!-- Gender -->

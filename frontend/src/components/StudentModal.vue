@@ -38,7 +38,7 @@
         </div>
         <div>
           <div class="text-[10px] font-bold uppercase tracking-widest text-ink-3 mb-1">Konsentrasi</div>
-          <div class="text-xl font-bold text-ink">{{ student.fokus }}%</div>
+          <div class="text-xl font-bold text-ink">{{ student.konsentrasi }}%</div>
         </div>
       </div>
 
@@ -86,10 +86,10 @@ const dims = computed(() => {
   const s = props.student
   const entries = [
     { label: 'Screen Time', pct: Math.round(s.screen_time / 12 * 100), val: s.screen_time + 'j' },
-    { label: 'Konsentrasi', pct: 100 - s.fokus, val: s.fokus + '%' },
+    { label: 'Konsentrasi', pct: 100 - s.konsentrasi, val: s.konsentrasi + '%' },
     { label: 'Kualitas Tidur', pct: 100 - s.tidur, val: s.tidur + '%' },
     { label: 'Mood', pct: 100 - s.mood, val: s.mood + '%' },
-    { label: 'Prestasi', pct: 100 - s.prestasi, val: s.prestasi + '%' },
+    { label: 'Pemahaman Materi', pct: 100 - s.pemahaman_materi, val: s.pemahaman_materi + '%' },
   ]
   return entries.map(d => ({
     ...d,

@@ -25,7 +25,7 @@
           <thead>
             <tr>
               <th>Nama</th><th>Kelas</th><th>Screen Time</th>
-              <th>Konsentrasi</th><th>Tidur</th><th>Mood</th><th>Prestasi</th>
+              <th>Konsentrasi</th><th>Tidur</th><th>Mood</th><th>Pemahaman Materi</th>
               <th>Risk Score</th><th>Cluster</th><th></th>
             </tr>
           </thead>
@@ -48,14 +48,14 @@
               <td>
                 <div class="flex items-center gap-2">
                   <div class="rbar">
-                    <div class="rbar-fill" :style="{ width: s.fokus + '%', background: s.fokus < 40 ? '#c0392b' : s.fokus < 65 ? '#b5620a' : '#14a896' }"></div>
+                    <div class="rbar-fill" :style="{ width: s.konsentrasi + '%', background: s.konsentrasi < 40 ? '#c0392b' : s.konsentrasi < 65 ? '#b5620a' : '#14a896' }"></div>
                   </div>
-                  <span class="text-xs text-ink-3">{{ s.fokus }}%</span>
+                  <span class="text-xs text-ink-3">{{ s.konsentrasi }}%</span>
                 </div>
               </td>
               <td class="text-ink-3 text-xs">{{ s.tidur }}%</td>
               <td class="text-ink-3 text-xs">{{ s.mood }}%</td>
-              <td class="text-ink-3 text-xs">{{ s.prestasi }}%</td>
+              <td class="text-ink-3 text-xs">{{ s.pemahaman_materi }}%</td>
               <td>
                 <div class="flex items-center gap-2">
                   <div class="rbar">

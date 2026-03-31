@@ -29,10 +29,10 @@ export function computeRisk(s) {
   const w = [0.3, 0.25, 0.15, 0.15, 0.15]
   const vals = [
     s.screen_time / 12,
-    1 - s.fokus / 100,
+    1 - s.konsentrasi / 100,
     1 - s.tidur / 100,
     1 - s.mood / 100,
-    1 - s.prestasi / 100,
+    1 - s.pemahaman_materi / 100,
   ]
   return Math.round(vals.reduce((sum, v, i) => sum + v * w[i], 0) * 100)
 }
@@ -46,10 +46,10 @@ function normalize(data) {
     ...s,
     _n: [
       s.screen_time / 12,
-      1 - s.fokus / 100,
+      1 - s.konsentrasi / 100,
       1 - s.tidur / 100,
       1 - s.mood / 100,
-      1 - s.prestasi / 100,
+      1 - s.pemahaman_materi / 100,
     ],
   }))
 }
@@ -97,9 +97,9 @@ export function useStudents() {
   const clustered = ref(false)
 
   function initSample() {
-    students.value = SAMPLE.map(([nama, kelas, screen_time, fokus, tidur, mood, prestasi]) => ({
-      nama, kelas, screen_time, fokus, tidur, mood, prestasi,
-      cluster: '', risk: computeRisk({ screen_time, fokus, tidur, mood, prestasi }),
+    students.value = SAMPLE.map(([nama, kelas, screen_time, konsentrasi, tidur, mood, pemahaman_materi]) => ({
+      nama, kelas, screen_time, konsentrasi, tidur, mood, pemahaman_materi,
+      cluster: '', risk: computeRisk({ screen_time, konsentrasi, tidur, mood, pemahaman_materi }),
       isRead: false
     }))
     runClustering()
@@ -137,10 +137,10 @@ export function useStudents() {
       nama: String(r.nama || '').trim(),
       kelas: String(r.kelas || '').trim(),
       screen_time: parseFloat(r.screen_time) || 0,
-      fokus: parseInt(r.konsentrasi) || 0,
+      konsentrasi: parseInt(r.konsentrasi) || 0,
       tidur: parseInt(r.tidur) || 0,
       mood: parseInt(r.mood) || 0,
-      prestasi: parseInt(r.prestasi) || 0,
+      pemahaman_materi: parseInt(r.pemahaman_materi) || 0,
       cluster: '', risk: 0, isRead: false
     })).filter(s => s.nama)
     mapped.forEach(s => { s.risk = computeRisk(s) })
