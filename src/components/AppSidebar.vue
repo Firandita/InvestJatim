@@ -31,13 +31,13 @@
     <div class="text-[10px] font-bold tracking-widest uppercase text-slate-400 px-2.5 pt-2 pb-1.5">Pemantauan</div>
 
     <button :class="['sb-item', activePage === 'overview' && 'active']" @click="nav('overview')">
-      <span class="w-5 text-center text-lg">📊</span> Overview
+     Overview
     </button>
     <button :class="['sb-item', activePage === 'clustering' && 'active']" @click="nav('clustering')">
-      <span class="w-5 text-center text-lg">🔵</span> Clustering K-Means
+     Clustering K-Means
     </button>
     <button :class="['sb-item', activePage === 'alerts' && 'active']" @click="nav('alerts')">
-      <span class="w-5 text-center text-lg">🔔</span> Alert EWS
+     Alert EWS
       <span v-if="alertCount > 0" class="ml-auto bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
         {{ alertCount }}
       </span>
@@ -45,14 +45,16 @@
 
     <div class="text-[10px] font-bold tracking-widest uppercase text-slate-400 px-2.5 pt-4 pb-1.5">Data</div>
 
-    <button :class="['sb-item', activePage === 'students' && 'active']" @click="nav('students')">
-      <span class="w-5 text-center text-lg">👥</span> Daftar Siswa
+    <button :class="['sb-item', activePage === 'students' && 'active']" @click="nav('students')">Daftar Siswa
     </button>
     <button :class="['sb-item', activePage === 'input' && 'active']" @click="nav('input')">
-      <span class="w-5 text-center text-lg">➕</span> Input Siswa
+    Input Siswa
     </button>
     <button :class="['sb-item', activePage === 'upload' && 'active']" @click="nav('upload')">
-      <span class="w-5 text-center text-lg">📁</span> Upload CSV/Excel
+    Upload CSV/Excel
+    </button>
+    <button :class="['sb-item', activePage === 'questionnaire' && 'active']" @click="$emit('navigate', 'questionnaire')">
+    Kuesioner
     </button>
   </aside>
 </template>

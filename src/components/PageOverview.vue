@@ -6,7 +6,7 @@
         <p class="text-xs md:text-sm text-ink-3 mt-0.5">Ringkasan kondisi seluruh siswa yang terdaftar</p>
       </div>
       <button class="btn btn-primary w-full sm:w-auto text-sm" @click="$emit('run-clustering')">
-        ⚙ Jalankan Clustering
+        Jalankan Clustering
       </button>
     </div>
 

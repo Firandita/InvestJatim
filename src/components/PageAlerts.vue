@@ -93,6 +93,6 @@ const handleMarkAll = () => {
 
   if (!hasUnread.value) return
   emit('mark-read')
-  emit('toast', '✓ Semua alert ditandai dibaca.')
+  emit('toast', 'Semua alert ditandai dibaca.')
 }
 </script>

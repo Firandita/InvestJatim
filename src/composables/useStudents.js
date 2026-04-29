@@ -149,6 +149,14 @@ export function useStudents() {
     return mapped.length
   }
 
+  // Taruh di bawah fungsi handleImport
+function handleStudentAdded(newStudent) {
+  addStudent(newStudent)   // langsung pakai addStudent dari useStudents
+  runClustering()
+  showToast(`✓ ${newStudent.nama} berhasil ditambahkan dari kuesioner!`)
+  goPage('overview')       // redirect ke overview setelah approve
+}
+
   const stats = computed(() => ({
     total: students.value.length,
     kritis: students.value.filter(s => s.cluster === 'Kritis').length,
