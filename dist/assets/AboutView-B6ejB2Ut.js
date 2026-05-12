@@ -1,0 +1,1 @@
+import{_ as n}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as o,a as t,o as a}from"./index-BmBmRZVa.js";const r={};function s(c,e){return a(),o("div",null,[...e[0]||(e[0]=[t("h1",null,"Tentang InvestJatim",-1),t("p",null,"Informasi tentang InvestJatim...",-1)])])}const m=n(r,[["render",s]]);export{m as default};

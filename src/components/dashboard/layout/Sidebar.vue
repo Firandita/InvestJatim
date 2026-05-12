@@ -5,7 +5,7 @@
     <div class="px-5 py-4 border-b border-gray-100">
       <RouterLink to="/" class="flex items-center gap-2">
         <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center">
-          <span class="material-symbols-rounded text-white" style="font-size:18px">trending_up</span>
+           <img src="../../../assets/images/logo-Investjatim.png" alt="InvestJatim" class="logo-img" />
         </div>
         <span class="font-bold text-brand-800 text-base">InvestJatim</span>
       </RouterLink>

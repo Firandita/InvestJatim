@@ -5,5 +5,5 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
-  base: '/',
+  base: '/InvestJatim/',
 })

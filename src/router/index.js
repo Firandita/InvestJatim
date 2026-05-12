@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth.store.js'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     // ── PUBLIC PORTAL ──────────────────────────
     {
@@ -98,5 +98,6 @@ router.beforeEach((to) => {
     return { name: 'unauthorized' }
   }
 })
+
 
 export default router
