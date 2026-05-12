@@ -2,10 +2,10 @@
   <nav class="navbar-portal">
     <div class="navbar-inner">
       <!-- Logo -->
-      <router-link to="/" class="navbar-logo">
-        <span class="logo-icon material-symbols-rounded">trending_up</span>
-        <span class="logo-text">Invest<strong>Jatim</strong></span>
-      </router-link>
+      <!-- Logo -->
+<router-link to="/" class="navbar-logo">
+  <img src="../../../assets/images/logo-Investjatim.png" alt="InvestJatim" class="logo-img" />
+</router-link>
 
       <!-- Desktop Menu -->
       <ul class="navbar-links">
@@ -75,9 +75,10 @@ const menuOpen = ref(false)
   flex-shrink: 0;
 }
  
-.logo-icon {
-  font-size: 1.5rem;
-  color: #6A994E;
+.logo-img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
 }
  
 .logo-text {

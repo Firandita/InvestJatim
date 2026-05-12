@@ -98,8 +98,8 @@ const navConfig = {
   mentor: [
     { icon: 'dashboard',      label: 'Overview',       to: 'mentor-overview' },
     { icon: 'groups',         label: 'UMKM Binaan',    to: 'mentor-overview' },
-    { icon: 'rate_review',    label: 'Beri Feedback',  to: 'mentor-feedback' },
-    { icon: 'checklist',      label: 'Checklist',      to: 'mentor-checklist' },
+    // { icon: 'rate_review',    label: 'Beri Feedback',  to: 'mentor-feedback' },
+    // { icon: 'checklist',      label: 'Checklist',      to: 'mentor-checklist' },
   ],
 }
 
